@@ -1,8 +1,12 @@
 services:
   app:
     build: .
+    labels:
+      - 'tsdproxy.enable=true'
+      - 'tsdproxy.name=oauth-api'
+      - 'tsdproxy.funnel=true'
     ports:
-      - '3000:3000'
+      - '3999:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000
