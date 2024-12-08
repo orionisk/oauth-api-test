@@ -1,0 +1,29 @@
+{
+  "name": "oauth-api-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=production node --no-deprecation dist/index.js",
+    "start:dev": "NODE_ENV=development node --no-deprecation --env-file=.env dist/index.js",
+    "build": "tsc && tsc-alias",
+    "dev": "NODE_ENV=development tsx watch --no-deprecation --env-file=.env src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@prisma/client": "^6.0.1",
+    "google-auth-library": "^9.15.0",
+    "hono": "^4.6.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "prisma": "^6.0.1",
+    "tsc-alias": "^1.8.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
