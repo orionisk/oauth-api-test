@@ -1,12 +1,18 @@
 services:
   app:
     build: .
-    ports:
-      - '3000:3000'
+    labels:
+      - 'tsdproxy.enable=true'
+      - 'tsdproxy.name=oauth-api'
+      - 'tsdproxy.funnel=true'
+      - 'tsdproxy.proxyprovider=alt'
+      - 'tsdproxy.ephemeral=true'
+    # ports:
+    #   - '3000:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=${DATABASE_URL:-"postgresql://postgres:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-postgres}?schema=public"}
+      - DATABASE_URL=${DATABASE_URL:-"postgresql://postgres:password@db:5432/postgres"}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
@@ -16,6 +22,8 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+    networks:
+      - tsdproxy_network
 
   db:
     image: postgres:16-alpine
@@ -26,6 +34,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
 
 volumes:
   postgres_data:
+
+networks:
+  tsdproxy_network:
+    external: true

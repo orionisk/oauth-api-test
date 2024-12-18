@@ -5,24 +5,24 @@ export const config = {
     access: {
       name: 'access_token',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
+      secure: true,
+      sameSite: 'none' as const,
       path: '/',
       maxAge: 60 * 15 // 15 minutes
     },
     refresh: {
       name: 'refresh_token',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
+      secure: true,
+      sameSite: 'none' as const,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 // 7 days
     },
     session: {
       name: 'sessionId',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
+      secure: true,
+      sameSite: 'none' as const,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 // 7 days
     }
