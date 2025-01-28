@@ -21,7 +21,7 @@ async function createOrUpdateUser(data: {
   refreshToken?: string;
   expiresAt?: Date;
 }) {
-  const { provider, providerId, role = 'CLIENT', ...userData } = data;
+  const { provider, providerId, role = 'Specialist', ...userData } = data;
 
   if (provider && providerId) {
     return prisma.user.upsert({
@@ -76,9 +76,7 @@ export async function handleGoogleCallback(code: string) {
   const payload = ticket.getPayload();
   if (!payload) throw new Error('No payload from Google');
 
-  const expiresAt = tokens.expiry_date
-    ? new Date(tokens.expiry_date)
-    : undefined;
+  const expiresAt = tokens.expiry_date ? new Date(tokens.expiry_date) : undefined;
 
   const user = await createOrUpdateUser({
     email: payload.email!,
@@ -107,9 +105,7 @@ export async function refreshGoogleToken(userId: string) {
     where: { id: userId },
     data: {
       accessToken: credentials.access_token,
-      expiresAt: credentials.expiry_date
-        ? new Date(credentials.expiry_date)
-        : undefined
+      expiresAt: credentials.expiry_date ? new Date(credentials.expiry_date) : undefined
     }
   });
 }
@@ -118,14 +114,11 @@ export async function getUserGoogleProfile(userId: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user?.accessToken) throw new Error('No access token found');
 
-  const response = await fetch(
-    'https://www.googleapis.com/oauth2/v2/userinfo',
-    {
-      headers: {
-        Authorization: `Bearer ${user.accessToken}`
-      }
+  const response = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`
     }
-  );
+  });
 
   return response.json();
 }

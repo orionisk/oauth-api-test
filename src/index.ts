@@ -20,10 +20,11 @@ app.use(
 );
 
 app.get('/', c => c.text('Health check OK'));
-app.route('/api/auth', authRouter);
+// app.route('/api/auth/v1/authentication', authRouter);
+app.route('', authRouter);
 
 app.use('/api/*', authMiddleware);
-app.route('/api/auth/check', checkAuth);
+app.route('/api/auth/v1/authentication/get-status', checkAuth);
 
 serve(app, () => {
   console.log(`Server is running on port ${config.port}`);

@@ -2,13 +2,13 @@ services:
   app:
     build: .
     labels:
-      - 'tsdproxy.enable=true'
-      - 'tsdproxy.name=oauth-api'
-      - 'tsdproxy.funnel=true'
-      - 'tsdproxy.proxyprovider=alt'
-      - 'tsdproxy.ephemeral=true'
+      - 'tsdproxy.enable=${TSDPROXY_ENABLE}'
+      - 'tsdproxy.name=${TSDPROXY_NAME}'
+      - 'tsdproxy.funnel=${TSDPROXY_FUNNEL}'
+      - 'tsdproxy.proxyprovider=${TSDPROXY_PROVIDER}'
+      - 'tsdproxy.ephemeral=${TSDPROXY_EPHEMERAL}'
     # ports:
-    #   - '3000:3000'
+    #   - '${DOCKER_PORT}:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000

@@ -11,7 +11,9 @@ checkAuth.get('/', async c => {
   const user = c.get('user');
   return c.json(
     {
-      role: user.role.toLowerCase()
+      user_id: user.id,
+      status: 'Vetbook_creation',
+      user_type: user.role
     },
     200
   );

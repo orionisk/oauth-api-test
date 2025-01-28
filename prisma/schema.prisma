@@ -12,7 +12,7 @@ model User {
   email        String?   @unique
   phoneNumber  String?   @unique
   name         String?
-  role         Role      @default(CLIENT)
+  role         Role      @default(Specialist)
   provider     Provider?
   providerId   String?
   accessToken  String?
@@ -32,7 +32,7 @@ enum Provider {
 }
 
 enum Role {
-  ADMIN
-  SPECIALIST
-  CLIENT
+  Admin
+  Specialist
+  Client
 }

@@ -1,11 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import type { User } from '@prisma/client';
 import { verifyToken } from '../lib/jwt';
-import {
-  getAuthCookies,
-  getAuthenticatedUser,
-  refreshUserSession
-} from '../lib/auth-utils';
+import { getAuthCookies, getAuthenticatedUser, refreshUserSession } from '../lib/auth-utils';
 
 export const authMiddleware = createMiddleware<{
   Variables: {

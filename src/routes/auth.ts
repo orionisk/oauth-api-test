@@ -5,14 +5,17 @@ import { handleGoogleAuth, handleGoogleCallback } from '../services/auth';
 
 export const authRouter = new Hono();
 
-authRouter.get('/google', async c => {
+const handleGoogleAuthRequest = async (c: any) => {
   const clientUrl = c.req.header('referer') || config.clientUrl;
   const state = Buffer.from(JSON.stringify({ clientUrl })).toString('base64');
   const authUrl = await handleGoogleAuth(state);
   return c.redirect(authUrl);
-});
+};
 
-authRouter.get('/google/callback', async c => {
+authRouter.get('/api/auth/v1/authentication/google', handleGoogleAuthRequest);
+authRouter.get('/api/auth/v1/authentication/google/', handleGoogleAuthRequest);
+
+authRouter.get('/api/auth/google/callback', async c => {
   const code = c.req.query('code');
   const state = c.req.query('state');
 
